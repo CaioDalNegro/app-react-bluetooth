@@ -91,6 +91,10 @@ export default function bleScannerComponent() {
         })
       }
     });
+
+    setTimeout(()=>{
+      manager.stopDeviceScan(), 5000
+    })
   }
 
 }
