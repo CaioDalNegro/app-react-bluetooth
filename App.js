@@ -60,7 +60,7 @@ export default function bleScannerComponent() {
       }
     }
     return true;
-  }
+  };
 
   const scanForDevices = async () => {
     const hasPermission = await requestBluetoothPermission();
@@ -88,13 +88,39 @@ export default function bleScannerComponent() {
             return [...prevDevices, device];
           }
           return prevDevices;
-        })
+        });
       }
     });
 
     setTimeout(()=>{
       manager.stopDeviceScan(), 5000
     })
-  }
+  };
 
-}
+  return(
+    <View style={styles.container}>
+      <Text> Dispositivo Bluetooth Encontrados: </Text>
+      <Button title="Scan Devices" onPress={scanForDevices}/>
+      <FlatList
+      data={devices}
+      keyExtractor={item => item.id}
+      renderItem={({item}) => (
+        <Text style={styles.deviceText}>
+          {item.name} --- ({item.id})
+        </Text>
+      )}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex:1,
+    padding:20,
+  },
+  deviceText: {
+    fontSize: 16,
+    padding: 20,
+  }
+});
